@@ -19,13 +19,6 @@ def pickingNumbers(a):
     aux = []
     for num in a:
         aux.append(int(num, base))
-    # Runtime finding biggest and smallest: O(n)
-    # Space complexity: O(1)
-    for num in a:
-        if num > biggest:
-            biggest = num
-        if num < smallest:
-            smallest = num
     count_nums = dict()
     # Runtime building count_nums: O(n)
     # Space Complexity: O(k) where k is the number of
