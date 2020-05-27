@@ -7,11 +7,14 @@ from collections import OrderedDict
 # Note that this count sort handles negative integers, as well as characters
 # This sort will not handle symbols
 
+# Since this algorithm is composed of count sort combined with TimSort, it is stable
+
 base = 35
 
 def pickingNumbers(a):
     biggest = a[0]
     smallest = a[0]
+    # Runtime for copying input array: O(n)
     # Space complexity copying input array: 0(n)
     aux = []
     for num in a:
