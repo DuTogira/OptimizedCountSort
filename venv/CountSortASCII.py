@@ -1,5 +1,3 @@
-from collections import OrderedDict
-
 # Combined complexity of improved count sort algorithm:
 # Runtime Complexity: O(n) best, O(n + k*log(k)) average, O(n*log(n)) worst when k == n
 # Space Complexity: O(n) best/average/worst
@@ -10,8 +8,6 @@ from collections import OrderedDict
 # Since this algorithm is composed of count sort combined with TimSort, it is stable
 
 def pickingNumbers(a):
-    biggest = a[0]
-    smallest = a[0]
     # Runtime for copying input array: O(n)
     # Space complexity copying input array: 0(n)
     aux = []
