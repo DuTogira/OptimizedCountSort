@@ -4,10 +4,8 @@ from collections import OrderedDict
 # Runtime Complexity: O(n) best, O(k*log(k)) average, O(n*log(n)) worst
 # Space Complexity: O(n) best/average/worst
 
-# Note that this count sort handles negative integers, as well as characters
-# This sort will not handle symbols
-
-base = 35
+# This count sort handles all ASCII characters, but will not properly handle
+# negative integers, as the negative sign is seen as a character
 
 def pickingNumbers(a):
     biggest = a[0]
@@ -15,7 +13,7 @@ def pickingNumbers(a):
     # Space complexity copying input array: 0(n)
     aux = []
     for num in a:
-        aux.append(int(num, base))
+        aux.append(int(''.join(str(ord(c)) for c in num)))
     # Runtime finding biggest and smallest: O(n)
     # Space complexity: O(1)
     for num in a:
@@ -44,14 +42,14 @@ def pickingNumbers(a):
     # Space Complexity: O(1)
     i = 0
     for num in a:
-        aux[count_nums[int(num, base)] - 1] = a[i]
-        count_nums[int(num, base)] -= 1
+        aux[count_nums[int(''.join(str(ord(c)) for c in num))] - 1] = a[i]
+        count_nums[int(''.join(str(ord(c)) for c in num))] -= 1
         i += 1
     a = aux
     return a
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
+    with open('input2.txt', 'r') as f:
         data = f.read()
         data = data.split()
     data = pickingNumbers(data)
