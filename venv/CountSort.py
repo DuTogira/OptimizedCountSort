@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 # Combined complexity of improved count sort algorithm:
-# Runtime Complexity: O(n) best, O(k*log(k)) average, O(n*log(n)) worst
+# Runtime Complexity: O(n) best, O(n + k*log(k)) average, O(n*log(n)) worst when k == n
 # Space Complexity: O(n) best/average/worst
 
 # Note that this count sort handles negative integers, as well as characters
