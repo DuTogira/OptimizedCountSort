@@ -2,8 +2,8 @@
 # Runtime Complexity: O(n) best, O(n + k*log(k)) average, O(n*log(n)) worst when k == n
 # Space Complexity: O(n) best/average/worst
 
-# Note that this count sort handles negative integers, as well as characters
-# This sort will not handle symbols
+# Note that this count sort handles negative integers, characters, and symbols.
+# This algorithm will not handle non-integer numbers correctly, though it technically sorts them
 
 # Since this algorithm is composed of count sort combined with TimSort, it is stable
 
@@ -14,7 +14,12 @@ def pickingNumbers(a):
     # Space complexity copying input array: 0(n)
     aux = []
     for num in a:
-        aux.append(int(num, base))
+        if num.lstrip('-').isdigit():
+            aux.append(int(num))
+        elif num.isalnum():
+            aux.append(int(num, base))
+        else:
+            aux.append(sum(ord(c) for c in num))
     count_nums = dict()
     # Runtime building count_nums: O(n)
     # Space Complexity: O(k) where k is the number of
@@ -36,8 +41,15 @@ def pickingNumbers(a):
     # Space Complexity: O(1)
     i = 0
     for num in a:
-        aux[count_nums[int(num, base)] - 1] = a[i]
-        count_nums[int(num, base)] -= 1
+        if num.lstrip('-').isdigit():
+            aux[count_nums[int(num)] - 1] = a[i]
+            count_nums[int(num)] -= 1
+        elif num.isalnum():
+            aux[count_nums[int(num, base)] - 1] = a[i]
+            count_nums[int(num, base)] -= 1
+        else:
+            aux[count_nums[sum(ord(c) for c in num)] - 1] = a[i]
+            count_nums[sum(ord(c) for c in num)] -= 1
         i += 1
     a = aux
     return a
