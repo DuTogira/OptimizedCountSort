@@ -9,7 +9,7 @@
 
 base = 35
 
-def pickingNumbers(a):
+def duSort(a):
     # Runtime for copying input array: O(n)
     # Space complexity copying input array: 0(n)
     aux = []
@@ -19,7 +19,7 @@ def pickingNumbers(a):
         elif num.isalnum():
             aux.append(int(num, base))
         else:
-            aux.append(sum(ord(c) for c in num))
+            aux.append(sum(int(c) if c.isdigit() else ord(c) for c in num))
     count_nums = dict()
     # Runtime building count_nums: O(n)
     # Space Complexity: O(k) where k is the number of
@@ -48,8 +48,8 @@ def pickingNumbers(a):
             aux[count_nums[int(num, base)] - 1] = a[i]
             count_nums[int(num, base)] -= 1
         else:
-            aux[count_nums[sum(ord(c) for c in num)] - 1] = a[i]
-            count_nums[sum(ord(c) for c in num)] -= 1
+            aux[count_nums[sum(int(c) if c.isdigit() else ord(c) for c in num)] - 1] = a[i]
+            count_nums[sum(int(c) if c.isdigit() else ord(c) for c in num)] -= 1
         i += 1
     a = aux
     return a
@@ -58,6 +58,6 @@ if __name__ == '__main__':
     with open('input.txt', 'r') as f:
         data = f.read()
         data = data.split()
-    data = pickingNumbers(data)
+    data = duSort(data)
     print(data)
 
