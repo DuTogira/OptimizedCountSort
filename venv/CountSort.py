@@ -23,7 +23,7 @@ def duSort(a: list):
         if num.lstrip('-').isdigit() or num.replace('.', '').isdigit():
             aux.append(float(num))
         else:
-            aux.append(sum(int(c) if c.isdigit() else ord(c) for c in num))
+            aux.append(int(''.join(str(int(c) if c.isdigit() else ord(c)) for c in num)))
     # Runtime building count_nums: O(n)
     # Space Complexity: O(k) where k is the number of
     # distinct numbers within our input a
@@ -47,8 +47,8 @@ def duSort(a: list):
             aux[count_nums[float(num)] - 1] = a[i]
             count_nums[float(num)] += 1
         else:
-            aux[count_nums[sum(int(c) if c.isdigit() else ord(c) for c in num)] - 1] = a[i]
-            count_nums[sum(int(c) if c.isdigit() else ord(c) for c in num)] += 1
+            aux[count_nums[int(''.join(str(int(c) if c.isdigit() else ord(c)) for c in num))] - 1] = a[i]
+            count_nums[int(''.join(str(int(c) if c.isdigit() else ord(c)) for c in num))] += 1
     # Runtime copying the sorted info back: O(n)
     # Space Complexity: O(1)
     for i, num in enumerate(aux):
