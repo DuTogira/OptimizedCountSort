@@ -18,7 +18,6 @@ def duSort(a: list):
     prev_val = 0
     curr = 0
     aux = []
-    aux_num = []
     aux_alph = []
     count_nums = dict()
     count_nums_aux = dict()
@@ -26,14 +25,14 @@ def duSort(a: list):
     # Space complexity: 0(n)
     for num in a:
         if num.lstrip('-').isdigit() or num.replace('.', '').isdigit():
-            aux_num.append(float(num))
+            aux.append(float(num))
         else:
             aux_alph.append(num)
     # Runtime building count_nums: O(s)
     # Space Complexity: O(s) where s is the number of
     # distinct numeric elements within our input a
     # By definition, s <= k
-    for num in aux_num:
+    for num in aux:
         if num in count_nums.keys():
             count_nums[num] += 1
         else:
@@ -66,14 +65,14 @@ def duSort(a: list):
     # Space Complexity: O(1)
     for i, num in enumerate(a):
         if num.lstrip('-').isdigit() or num.replace('.', '').isdigit():
-            aux_num[count_nums[float(num)] - 1] = a[i]
+            aux[count_nums[float(num)] - 1] = a[i]
             count_nums[float(num)] += 1
         else:
             aux_alph[count_nums_aux[num] - 1] = a[i]
             count_nums_aux[num] += 1
     # Runtime copying the sorted info back: O(n)
     # Space Complexity: O(1)
-    aux = aux_num + aux_alph
+    aux += aux_alph
     for i, num in enumerate(aux):
         a[i] = num
     return a
