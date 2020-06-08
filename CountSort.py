@@ -20,45 +20,46 @@ from random import shuffle
 # Based on performance tests, duSort runs ~2 times slower than TimSort, even though its asymptotic run-time is better
 # This is because it practically takes as long to build the count dictionaries as it takes for TimSort to sort the data
 # This analysis makes the assumption that both algorithms must split data into numeric v non-numeric sub-sets
-def duSort(a: list):
-    aux = []
-    aux_alph = []
+# Currently duSort becomes competitive with TimSort when < 5% of input data is unique.
+def duSort(a: list) -> list:
+    # aux = []
+    # aux_alph = []
     count_nums = dict()
-    count_nums_aux = dict()
+    # count_nums_aux = dict()
     # Runtime for splitting input array: O(n)
     # Space complexity: 0(n)
-    for i in range(0, len(a)):
-        if a[i].lstrip('-').isdigit() or a[i].replace('.', '').isdigit():
-            aux.append(float(a[i]))
-        else:
-            aux_alph.append(a[i])
+    # for i in range(0, len(a)):
+    #    try:
+    #        aux.append(float(a[i]))
+    #    except ValueError:
+    #        aux_alph.append(a[i])
     # Runtime building count_nums: O(S)
     # Space Complexity: O(S) where S is the number of
     # numeric elements within our input a
     # By definition, S <= n
-    for i in range(0, len(aux)):
-        if aux[i] in count_nums:
-            count_nums[aux[i]] += 1
+    for i in range(0, len(a)):
+        if a[i] in count_nums:
+            count_nums[a[i]] += 1
         else:
-            count_nums[aux[i]] = 1
+            count_nums[a[i]] = 1
     # Runtime building count_nums: O(R)
     # Space Complexity: O(R) where R is the number of
     # non numeric elements within our input a
     # By definition, R <= n
-    for i in range(0, len(aux_alph)):
-        if aux_alph[i] in count_nums_aux:
-            count_nums_aux[aux_alph[i]] += 1
-        else:
-            count_nums_aux[aux_alph[i]] = 1
+    # for i in range(0, len(aux_alph)):
+    #    if aux_alph[i] in count_nums_aux:
+    #        count_nums_aux[aux_alph[i]] += 1
+    #    else:
+    #        count_nums_aux[aux_alph[i]] = 1
 
     i = 0
     # Runtime adjusting count_nums to contain output positions: O(n-alpha) + O(r*log(r)),
     # where r is the number of distinct elements in R
     # Space Complexity: O(r)
-    for key in sorted(count_nums_aux.keys()):
-        for j in range(0, count_nums_aux[key]):
-            a[i + j] = key
-        i += count_nums_aux[key]
+    # for key in sorted(count_nums_aux.keys()):
+    #    for j in range(0, count_nums_aux[key]):
+    #        a[i + j] = key
+    #    i += count_nums_aux[key]
     # Runtime adjusting count_nums to contain output positions: O(n-int) + O(s*log(s)),
     # where s is the number of distinct elements in S
     # Space Complexity: O(s)
@@ -75,21 +76,35 @@ def benchmark(a: list):
     aux: list = []
     aux_alph: list = []
     for i in range(0, len(a)):
-        if a[i].lstrip('-').isdigit() or a[i].replace('.', '').isdigit():
+        try:
             aux.append(float(a[i]))
-        else:
+        except ValueError:
             aux_alph.append(a[i])
-    a = sorted(aux).append(sorted(aux_alph))
+    a = sorted(aux)
+    a.append(sorted(aux_alph))
+    return a
+
+
+def duSortTest(a: list):
+    aux: list = []
+    aux_alph: list = []
+    for i in range(0, len(a)):
+        try:
+            aux.append(float(a[i]))
+        except ValueError:
+            aux_alph.append(a[i])
+    a = duSort(aux)
+    a.append(duSort(aux_alph))
     return a
 
 
 # Basic main function for testing and debugging. Not critical to the algorithm
 if __name__ == '__main__':
-    with open('input3.txt', 'r') as f:
+    with open('input6.txt', 'r') as f:
         data = f.read()
         data = data.split()
         shuffle(data)
     cProfile.run('benchmark(data)')
-    cProfile.run('duSort(data)')
-    #data = duSort(data)
+    cProfile.run('duSortTest(data)')
+    #data = duSortTest(data)
     #print(data)
